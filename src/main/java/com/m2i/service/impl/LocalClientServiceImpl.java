@@ -15,8 +15,8 @@ import com.m2i.service.ClientService;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
 
-@Stateless
-public class ClientServiceImpl implements ClientService {
+@Stateless(name = "localclient")
+public class LocalClientServiceImpl implements ClientService {
 
     @Inject
     private ClientMapper clientMapper;
@@ -28,15 +28,12 @@ public class ClientServiceImpl implements ClientService {
     private FakeDatabase db;
 
     @Override
-    public void createClient(ClientCreateDTO dto) {
+    public ClientDTO createClient(ClientCreateDTO dto) {
         Client client = clientCreateMapper.toEntity(dto);
         db.getClients().put(client.getClientId(), client);
         System.out.println("Enregistrement du client " + client + " en base de données");
-    }
-
-    @Override
-    public ClientDTO getClientById(Long id) {
-        return clientMapper.toDto(db.getClients().get(id));
+        
+        return clientMapper.toDto(client);
     }
 
     @Override
@@ -48,14 +45,8 @@ public class ClientServiceImpl implements ClientService {
                 .collect(Collectors.toList());
     }
 
-    @Override
-    public void updateClient(ClientDTO dto) {
-        Client client = clientMapper.toEntity(dto);
-        db.getClients().put(client.getClientId(), client);
-    }
-
-    @Override
-    public void deleteClient(Long id) {
-        db.getClients().remove(id);
-    }
+	@Override
+	public ClientDTO getClientByEmail(String email) {
+		return null;
+	}
 }

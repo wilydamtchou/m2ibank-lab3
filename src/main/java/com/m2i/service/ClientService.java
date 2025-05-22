@@ -9,9 +9,7 @@ import java.util.List;
 
 @LocalBean
 public interface ClientService {
-    void createClient(ClientCreateDTO dto);
-    ClientDTO getClientById(Long id);
+    ClientDTO createClient(ClientCreateDTO dto);
+    ClientDTO getClientByEmail(String email);
     List<ClientDTO> getAllClients();
-    void updateClient(ClientDTO dto);
-    void deleteClient(Long id);
 }
